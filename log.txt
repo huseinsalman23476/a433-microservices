@@ -1,0 +1,20 @@
+a433-microservices-item-app-1  | 2023-06-01T08:56:45.594915398Z 
+a433-microservices-item-app-1  | 2023-06-01T08:56:45.594967598Z > docker-software-delivery@1.0.0 start /app
+a433-microservices-item-app-1  | 2023-06-01T08:56:45.594974098Z > node ./bin/www
+a433-microservices-item-app-1  | 2023-06-01T08:56:45.594977098Z 
+a433-microservices-item-app-1  | 2023-06-01T08:56:46.116508316Z NODE_ENV: production
+a433-microservices-item-app-1  | 2023-06-01T08:56:46.444761992Z Connected to database
+a433-microservices-item-app-1  | 2023-06-01T08:56:53.094774332Z [0mGET / [36m304 [0m3577.008 ms - -[0m
+a433-microservices-item-app-1  | 2023-06-01T08:56:53.188385451Z [0mGET /stylesheets/style.css [32m200 [0m44.488 ms - 519[0m
+a433-microservices-item-app-1  | 2023-06-01T08:56:53.283473667Z [0mGET /javascripts/dist/dist.min.js [32m200 [0m1.141 ms - 186999[0m
+a433-microservices-item-app-1  | 2023-06-01T08:56:55.481965348Z [0mGET /api [32m200 [0m377.267 ms - 205[0m
+a433-microservices-item-db-1   | 2023-06-01T08:56:40.166402489Z 2023-06-01T08:56:40.166+0000 I CONTROL  [initandlisten] ** WARNING: /sys/kernel/mm/transparent_hugepage/enabled is 'always'.
+a433-microservices-item-db-1   | 2023-06-01T08:56:40.166407389Z 2023-06-01T08:56:40.166+0000 I CONTROL  [initandlisten] **        We suggest setting it to 'never'
+a433-microservices-item-db-1   | 2023-06-01T08:56:40.166506090Z 2023-06-01T08:56:40.166+0000 I CONTROL  [initandlisten] 
+a433-microservices-item-db-1   | 2023-06-01T08:56:43.599793103Z 2023-06-01T08:56:43.599+0000 I FTDC     [initandlisten] Initializing full-time diagnostic data capture with directory '/data/db/diagnostic.data'
+a433-microservices-item-db-1   | 2023-06-01T08:56:43.601141589Z 2023-06-01T08:56:43.601+0000 I NETWORK  [initandlisten] listening via socket bound to 0.0.0.0
+a433-microservices-item-db-1   | 2023-06-01T08:56:43.601469786Z 2023-06-01T08:56:43.601+0000 I NETWORK  [initandlisten] listening via socket bound to /tmp/mongodb-27017.sock
+a433-microservices-item-db-1   | 2023-06-01T08:56:43.601616984Z 2023-06-01T08:56:43.601+0000 I NETWORK  [initandlisten] waiting for connections on port 27017
+a433-microservices-item-db-1   | 2023-06-01T08:56:46.343901213Z 2023-06-01T08:56:46.343+0000 I NETWORK  [listener] connection accepted from 172.22.0.3:46388 #1 (1 connection now open)
+a433-microservices-item-db-1   | 2023-06-01T08:56:46.435974181Z 2023-06-01T08:56:46.434+0000 I NETWORK  [conn1] received client metadata from 172.22.0.3:46388 conn1: { driver: { name: "nodejs", version: "2.2.36" }, os: { type: "Linux", name: "linux", architecture: "x64", version: "5.15.90.1-microsoft-standard-WSL2" }, platform: "Node.js v14.21.3, LE, mongodb-core: 2.1.20" }
+a433-microservices-item-db-1   | 2023-06-01T08:56:55.478005347Z 2023-06-01T08:56:55.477+0000 I COMMAND  [conn1] command accumulator.documents command: find { find: "documents", filter: {}, $db: "accumulator" } planSummary: COLLSCAN keysExamined:0 docsExamined:3 cursorExhausted:1 numYields:1 nreturned:3 reslen:286 locks:{ Global: { acquireCount: { r: 4 } }, Database: { acquireCount: { r: 2 } }, Collection: { acquireCount: { r: 2 } } } protocol:op_query 369ms
