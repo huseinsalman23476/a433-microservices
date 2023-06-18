@@ -1,0 +1,26 @@
+# mendefinisikan versi Kubernetes API yang digunakan untuk membuat object dari manifest
+apiVersion: v1
+
+# rincian jenis object Service
+kind: Service
+
+# mendefinisikan data informasi tentang object Service
+metadata:
+  name: backend-tier
+  labels:
+    app: microservices
+
+# mendefinisikan spesifikasi object Service
+spec:
+
+  # mendefinisikan expose service port 8080
+  ports:
+  - port: 8080
+  
+  # mendifinisikan selector untuk mengidentifikasi Pod yang memiliki label tier: backend
+  selector:
+    tier: backend
+  
+  #  mengekspos Service pada port yang sama dari setiap Node yang dipilih di Cluster menggunakan NAT (network address translation). 
+  #  Tipe ini membuat Service dapat diakses dari luar Cluster menggunakan format <NodeIP>:<NodePort>.
+  type: NodePort
