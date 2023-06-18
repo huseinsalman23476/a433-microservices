@@ -1,0 +1,46 @@
+# mendefinisikan versi Kubernetes API yang digunakan untuk membuat object dari manifest
+apiVersion: apps/v1
+
+# rincian jenis object Deployment
+kind: Deployment
+
+# mendefinisikan data informasi tentang object di kind yg sama
+metadata:
+  name: frontend-tier
+  labels:
+    app: microservices
+    tier: frontend
+
+# mendefinisikan spesifikasi object Deployment
+spec:
+
+  # mendefinisikan replica Pod berjumlah 1
+  replicas: 1
+  
+  # mendifinisikan selector untuk mengidentifikasi Pod yang memiliki label tier: frontend
+  selector:
+    matchLabels:
+      tier: frontend
+  template:
+    metadata:
+    
+       # mendifinisikan label
+      labels:
+        app: microservices
+        tier: frontend
+        
+     # mendefinisikan spesifikasi template
+    spec:
+    
+         # mendefinisikan spesifikasi container
+        containers:
+        
+            # mendefinisikan nama container
+        - name: karsajobs-ui
+        
+            # mendefinisikan container image
+          image: ghcr.io/huseinsalman23476/karsajobs-ui:latest
+          
+            # mendefinisikan expose port container 8000
+          ports:
+          - containerPort: 8000
