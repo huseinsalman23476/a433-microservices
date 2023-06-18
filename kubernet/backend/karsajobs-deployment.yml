@@ -1,0 +1,69 @@
+# mendefinisikan versi Kubernetes API yang digunakan untuk membuat object dari manifest
+apiVersion: apps/v1
+
+# rincian jenis object Deployment
+kind: Deployment
+
+# mendefinisikan data informasi tentang object di kind yg sama
+metadata:
+  name: backend-tier
+  labels:
+    app: microservices
+    tier: backend
+    
+# mendefinisikan spesifikasi object Deployment
+spec:
+
+  # mendefinisikan replica Pod berjumlah 1 
+  replicas: 1
+  
+  # mendifinisikan selector untuk mengidentifikasi Pod yang memiliki label tier: backend
+  selector:
+    matchLabels:
+      tier: backend
+  template:
+    metadata:
+    
+       # mendifinisikan label
+      labels:
+        app: microservices
+        tier: backend
+        
+     # mendefinisikan spesifikasi template
+    spec:
+
+       # mendefinisikan spesifikasi container
+      containers:
+      
+         # mendefinisikan nama container
+      - name: karsajobs
+      
+         # mendefinisikan container image
+        image: ghcr.io/huseinsalman23476/karsajobs:latest
+        
+         # mendefinisikan expose port container 8080
+        ports:
+          - containerPort: 8080
+          
+         # mendefinisikan environment variable
+        env:
+          - name: APP_PORT
+            value: "8080"  
+
+            # MONGO_HOST dengan nilai yang diambil dari MongoDB Service
+          - name: MONGO_HOST
+            value: mongo-tier       
+
+            # MONGO_USER dengan nilai yang diambil dari MongoDB Secret (MONGO_ROOT_USERNAME)
+          - name: MONGO_USER
+            valueFrom:
+              secretKeyRef:
+                name: mongo-secret
+                key: MONGO_ROOT_USERNAME
+                
+            # MONGO_PASS dengan nilai yang diambil dari MongoDB Secret (MONGO_ROOT_PASSWORD)
+          - name: MONGO_PASS
+            valueFrom:
+              secretKeyRef:
+                name: mongo-secret
+                key: MONGO_ROOT_PASSWORD
