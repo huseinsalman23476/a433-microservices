@@ -1,0 +1,26 @@
+# mendefinisikan versi Kubernetes API yang digunakan untuk membuat object dari manifest
+apiVersion: v1
+
+# rincian jenis object Service
+kind: Service
+
+# mendefinisikan data informasi tentang object Service
+metadata:
+  name: mongo-tier
+  labels:
+    app: microservices
+    
+# mendefinisikan spesifikasi object Service
+spec:
+
+  # mendefinisikan expose port service 27017
+  ports:
+    - port: 27017
+    
+  # mendifinisikan selector untuk mengidentifikasi Pod yang memiliki label tertentu
+  selector:
+    app: microservices
+    tier: mongo
+    
+  #  untuk membuat Headless Service: takkan mengalokasikan IP address untuk Service 
+  clusterIP: None
