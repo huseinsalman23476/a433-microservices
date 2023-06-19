@@ -1,4 +1,4 @@
-# Mendefinisikan versi platform CircleCI yang digunakan versi 2.1
+# Mendefinisikan versi platform CircleCI yang digunakan versi 2.1 
 version: 2.1
 
 # Mendefinisikan jobs: lint-dockerfile, test-app, build-app-karsajobs
