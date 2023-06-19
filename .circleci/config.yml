@@ -1,0 +1,50 @@
+# Mendefinisikan versi platform CircleCI yang digunakan versi 2.1
+version: 2.1
+
+# Mendefinisikan jobs: lint-dockerfile, build-app-karsajobs-ui
+jobs:
+
+  # Mendefinisikan job lint-dockerfile: berisi proses untuk menginstal hadolint dan menjalankannya terhadap berkas Dockerfile
+  lint-dockerfile:
+    docker:
+      - image: cimg/base:2023.06
+    steps:
+      - checkout
+      - setup_remote_docker:
+          docker_layer_caching: true 
+      - run:
+          name: Menginstall hadolint
+          command: docker pull ghcr.io/hadolint/hadolint
+      - run:
+          name: Menjalankan hadolint
+          command: docker run --rm -i ghcr.io/hadolint/hadolint < Dockerfile
+
+  # Mendefinisikan job build-app-karsajobs-ui: berisi perintah untuk build dan push image
+  build-app-karsajobs-ui:
+    docker:
+      - image: cimg/base:2023.06
+    steps:
+      - checkout
+      - setup_remote_docker:
+          docker_layer_caching: true      
+      - run:
+          name: Membuat Docker image
+          command: docker build -t karsajobs-ui:latest .
+      - run:
+          name: Merubah nama Docker image
+          command: docker tag karsajobs:latest ghcr.io/huseinsalman23476/karsajobs-ui:latest
+      - run:
+          name: Login ke GitHub Packages
+          command: echo $CR_PAT | docker login ghcr.io -u huseinsalman23476 --password-stdin
+      - run:
+          name: Mengunggah Docker image ke GitHub Packages
+          command: docker push ghcr.io/huseinsalman23476/karsajobs-ui:latest
+
+# Mendefinikan workflows karsajobs-ui-workflow dan menentukan daftar dan urutan pelaksanaan jobs: lint-dockerfile, build-app-karsajobs-ui 
+workflows:
+  karsajobs-ui-workflow:
+    jobs:
+      - lint-dockerfile
+      - build-app-karsajobs-ui:
+          requires:
+            - lint-dockerfile
