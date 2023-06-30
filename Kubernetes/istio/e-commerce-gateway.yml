@@ -1,0 +1,56 @@
+# mendefinisikan versi Kubernetes API yang digunakan untuk membuat object dari manifest
+apiVersion: networking.istio.io/v1alpha3
+
+# rincian jenis object Gateway
+kind: Gateway
+
+# mendefinisikan data informasi tentang object Gateway
+metadata:
+
+  # mendefinisikan nama yang digunakan untuk koneksi dari VirtualService
+  name: e-commerce-gateway
+
+# mendefinisikan spesifikasi object Gateway
+spec:
+
+  # mendifinisikan selector menggunakan istio default controller
+  selector:
+    istio: ingressgateway
+  servers:
+     # mendefinisikan port 80 yang dikonfigurasi untuk "istio-ingress" Service.
+    - port:
+        number: 80
+        name: http
+        protocol: HTTP
+        
+        # mendefinisikan nama host yang diizinkan melalui gateway
+      hosts:
+        - "*"
+---
+# mendefinisikan versi Kubernetes API yang digunakan untuk membuat object dari manifest
+apiVersion: networking.istio.io/v1alpha3
+
+# rincian jenis object VirtualService
+kind: VirtualService
+metadata:
+  name: e-commerce
+spec:
+  hosts:
+    - "*"
+  # mendefinisikan nama yang harus sama dengan nama dalam definisi object Gateway
+  gateways:
+    - e-commerce-gateway
+    
+   # mendefinisikan match uri untuk /order
+  http:
+    - match:
+        - uri:
+            exact: /order
+        
+        # mendefinisikan routing request: /order ke host: order-service di port: 3000
+      route:
+        - destination:
+            host: order-service
+            port:
+              number: 3000
+          weight: 100
