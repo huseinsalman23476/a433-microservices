@@ -1,0 +1,52 @@
+# mendefinisikan versi Kubernetes API yang digunakan untuk membuat object dari manifest
+apiVersion: apps/v1
+
+# rincian jenis object Deployment
+kind: Deployment
+
+# mendefinisikan data informasi tentang object di kind yg sama
+metadata:
+  name: order-service
+  labels:
+    app: order-service
+
+# mendefinisikan spesifikasi object Deployment
+spec:
+
+  # mendefinisikan replica Pod berjumlah 1 
+  # replicas: 1
+
+  # mendifinisikan selector untuk mengidentifikasi Pod yang memiliki label app: order-service
+  selector:
+    matchLabels:
+      app: order-service
+  template:
+    metadata:
+
+      # mendifinisikan label
+      labels:
+        app: order-service
+
+    # mendefinisikan spesifikasi template
+    spec:
+    
+      # mendefinisikan serviceAccountName dengan nama yang didefinisikan pada object ServiceAccount
+      serviceAccountName: e-commerce-order-service
+      
+      # mendefinisikan spesifikasi container
+      containers:
+         # mendefinisikan nama container
+        - name: order-service
+         # mendefinisikan container image
+          image: ghcr.io/huseinsalman23476/order-service:latest
+          
+          # mendefinisikan image pull policy
+          imagePullPolicy: IfNotPresent
+          
+          # mendefinisikan port 3000 pada container
+          ports:
+          - containerPort: 3000
+          
+          # mendefinisikan security context
+          securityContext:
+            runAsUser: 1000
