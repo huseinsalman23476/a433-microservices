@@ -1,0 +1,68 @@
+# mendefinisikan versi Kubernetes API yang digunakan untuk membuat object dari manifest
+apiVersion: apps/v1
+
+# rincian jenis object StatefulSet
+kind: StatefulSet
+
+# mendefinisikan data informasi tentang object di kind yg sama
+metadata:
+  name: rabbitmq
+
+# mendefinisikan spesifikasi object StatefulSet
+spec:
+  replicas: 1
+
+  # mendifinisikan selector untuk mengidentifikasi Pod yang memiliki label tertentu
+  selector:
+    matchLabels:
+      app: rabbitmq
+  serviceName: rabbitmq
+  template:
+    metadata:
+    
+      # mendifinisikan label
+      labels:
+        app: rabbitmq
+
+    # mendefinisikan spesifikasi template
+    spec:
+    
+      # mendefinisikan spesifikasi container
+      containers:
+         
+          # mendefinisikan nama container
+        - name: rabbitmq
+
+          # mendefinisikan nama image yang digunakan yaitu image rabbitmq:3.11-management dari Docker Hub
+          image: rabbitmq:3.11-management
+
+          # mendefinisikan expose port container 5672 (untuk RabbitMQ); serta port 15672 (untuk management interface)
+          ports:
+            - containerPort: 5672
+            - containerPort: 15672
+
+          # mendefinisikan volume mount untuk data dan log
+          volumeMounts:
+            - name: rabbitmq-data
+              mountPath: /var/lib/rabbitmq
+            - name: rabbitmq-log
+              mountPath: /var/log/rabbitmq
+
+  # mendefinisikan volume claim templates untuk data dan log
+  volumeClaimTemplates:
+    - metadata:
+        name: rabbitmq-data
+      spec:
+        accessModes:
+          - "ReadWriteOnce"
+        resources:
+          requests:
+            storage: 1Gi
+    - metadata:
+        name: rabbitmq-log
+      spec:
+        accessModes:
+          - "ReadWriteOnce"
+        resources:
+          requests:
+            storage: 1Gi
